@@ -62,3 +62,5 @@ Now, delete the `Gemfile.lock` and the contents of the current `Gemfile` - we're
 You should now be ready to write your first feature test. Create this file in `spec/features`, write your test, and TDD away!
 
 There's some flexibility here, but I'll usually start with a feature test, realize that I need a migration, and then I'll write a model test to build my model.
+
+#### Also, don't forget to add a snippet to your `application.html.erb` to enable your `flash` messages! 
