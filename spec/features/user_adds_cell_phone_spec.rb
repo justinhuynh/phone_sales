@@ -14,37 +14,11 @@ feature 'user adds cell phone', %{
   - [ ] Upon successfully creating a phone, I am redirected back to the index of phones.
 } do
 
-  let!(:manufacturer_1) { FactoryGirl.create(:manufacturer) }
-  let!(:manufacturer_2) { FactoryGirl.create(:manufacturer) }
-
   scenario 'user successfully adds cell phone with valid input' do
-    visit new_phone_path
 
-    select manufacturer_2.name, from: 'Manufacturer'
-    fill_in 'Year', with: '2004'
-    fill_in 'Battery Life', with: '1000'
-    fill_in 'Description', with: 'My very first phone'
-    click_button 'Create Phone'
-
-    expect(page).to have_content('Phone successfully added')
-    expect(page).to have_content('My very first phone')
   end
 
   scenario 'user enters invalid inputs for cell phone and sees errors' do
-    visit new_phone_path
 
-    select manufacturer_2.name, from: 'Manufacturer'
-    fill_in 'Year', with: '2000'
-    fill_in 'Battery Life', with: ''
-    fill_in 'Description', with: 'Super old phone'
-    click_button 'Create Phone'
-
-    expect(page).to have_content('Add a new phone')
-
-    expect(page).to_not have_content('Phone successfully added')
-    expect(page).to_not have_content('My very first phone')
-
-    expect(page).to have_content('Year must be greater than or equal to 2003')
-    expect(page).to have_content('Battery life can\'t be blank')
   end
 end
