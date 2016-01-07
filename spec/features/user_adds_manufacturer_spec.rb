@@ -13,10 +13,25 @@ feature 'user adds manufacturer', %{
 } do
 
   scenario 'user successfully adds manufacturer with valid input' do
+    visit new_manufacturer_path
 
+    fill_in 'Name', with: "Samsung"
+    fill_in 'Country', with: "South Korea"
+    click_button "Create Manufacturer"
+
+    expect(page).to have_content("Manufacturer successfully added")
+    expect(page).to have_content("Samsung")
   end
 
   scenario 'user enters invalid inputs for manufacturer and sees errors' do
+    visit new_manufacturer_path
 
+    click_button "Create Manufacturer"
+    
+    expect(page).to have_content("Add a new manufacturer")
+    expect(page).to have_content("Name can't be blank")
+    expect(page).to have_content("Country can't be blank")
+
+    expect(page).to_not have_content("Manufacturer successfully added")
   end
 end

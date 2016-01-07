@@ -7,18 +7,40 @@ feature 'user adds cell phone', %{
 
   Acceptance Criteria:
   - [ ] I must specify the cell phone manufacturer, year and battery life (an association between the phone and an existing manufacturer should be created).
-  - [ ] Only years from 2003 and above can be addedd.
+  - [ ] Only years from 2003 and above can be added.
   - [ ] I can optionally specify a description of the phone.
   - [ ] If I enter all of the required information in the required formats, the phone is recorded and I am presented with a notification of success.
   - [ ] If I do not specify all of the required information in the required formats, the phone is not recorded and I am presented with errors.
   - [ ] Upon successfully creating a phone, I am redirected back to the index of phones.
 } do
 
-  scenario 'user successfully adds cell phone with valid input' do
+  let!(:manufacturer_1) { FactoryGirl.create(:manufacturer) }
+  let!(:manufacturer_2) { FactoryGirl.create(:manufacturer) }
 
+  scenario 'user successfully adds cell phone with valid input' do
+    visit new_phone_path
+
+    select manufacturer_2.name, from: "Manufacturer"
+    fill_in "Year", with: "2004"
+    fill_in "Battery Life", with: "1000"
+    fill_in "Description", with: "My very first phone"
+    click_button "Create Phone"
+
+    expect(page).to have_content("Phone successfully added")
+    expect(page).to have_content("My very first phone")
   end
 
   scenario 'user enters invalid inputs for cell phone and sees errors' do
+    visit new_phone_path
 
+    fill_in "Year", with: "2002"
+    click_button "Create Phone"
+    save_and_open_page
+
+    expect(page).to have_content("Add a new phone")
+    expect(page).to have_content("Year can't be blank")
+    expect(page).to have_content("Battery life can't be blank")
+
+    expect(page).to_not have_content("Phone successfully added")
   end
 end
