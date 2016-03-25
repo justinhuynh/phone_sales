@@ -10,21 +10,12 @@
 `rake db:create`  
 The default name of your database resides in the `config/database.yml` file
 
-#### Create your .rspec file  
-`touch .rspec`  
-I usually have the following settings in my .rspec file:
-```
---color
---require spec_helper
-```
+#### Run `rake rspec:install`
 
 #### Create test directories and files
 (from project root directory)
 ```
-mkdir spec
-cd spec
 mkdir features models support
-touch rails_helper.rb spec_helper.rb
 ```
 
 So within my `spec` folder, I now have a `features` folder, a `models` folder, and a `support` folder. I also have the `rails_helper.rb` and `spec_helper.rb` files.
